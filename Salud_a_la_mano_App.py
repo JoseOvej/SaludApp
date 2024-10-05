@@ -165,13 +165,26 @@ direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: di
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
 dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
+# Convertir la dirección en coordenadas
+if direccion:
+    coordenadas = direccion_a_coordenadas(direccion)
+    
+    if coordenadas is not None and len(coordenadas) == 2:
+        latitud_ref = coordenadas[0]
+        longitud_ref = coordenadas[1]
+        st.write(f"Latitud: {latitud_ref}, Longitud: {longitud_ref}")
+    else:
+        st.write("No se pudieron obtener las coordenadas para la dirección.")
+else:
+    st.write("Por favor, escribe una dirección.")
+
 # Convertir la dirección a coordenadas
-coordenadas = direccion_a_coordenadas(direccion)
+##coordenadas = direccion_a_coordenadas(direccion)
 
 
 
-latitud_ref = coordenadas[0]
-longitud_ref = coordenadas[1]
+##latitud_ref = coordenadas[0]
+##longitud_ref = coordenadas[1]
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
