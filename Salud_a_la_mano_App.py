@@ -10,7 +10,7 @@ from geopy.geocoders import Nominatim
 # Igresamos valores iniciales por defecto para que la página no de error
 coordenadas = [-27.77392042365015, -64.31305325737927]
 
-# Fefinimos el fondo
+# Definimos el fondo
 page_bg_img = '''
 <style>
 .stApp {
@@ -28,17 +28,7 @@ col1, col2, col3 = st.columns([1, 2, 1])
 # Usar col2 para centrar la imagen
 with col2:
     st.image("./dr_mapp_01.jpg", width=300)
-
-# Centrar imagen usando HTML
-#st.markdown(
-#    """
-#    <div style="text-align: center;">
-#        <img src="dr_mapp_01.jpg" alt="centered image" width="300">
-#    </div>
-##    """, 
- #   unsafe_allow_html=True
-#)
-#st.image('./dr_mapp_01.jpg')
+    
 st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
 st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
@@ -145,14 +135,6 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 #    else:
 #        print("No se ha seleccionado un servicio o el filtro no tiene resultados.")
 
-# Función que se ejecuta cuando el botón es presionado
-def mostrar_dataframe(b):
-    # Mostrar el DataFrame filtrado
-    if not df_filtrado_global.empty:
-        print(f"\nFiltrando por servicio: {desplegable.value}")
-        display(df_filtrado_global)
-    else:
-        print("No se ha seleccionado un servicio o el filtro no tiene resultados.")
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
@@ -163,28 +145,15 @@ direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: di
 ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
-dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=100)
+dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
 # Convertir la dirección en coordenadas
-if direccion:
-    coordenadas = direccion_a_coordenadas(direccion)
-    
-    if coordenadas is not None and len(coordenadas) == 2:
-        latitud_ref = coordenadas[0]
-        longitud_ref = coordenadas[1]
-        st.write(f"Latitud: {latitud_ref}, Longitud: {longitud_ref}")
-    else:
-        st.write("No se pudieron obtener las coordenadas para la dirección.")
-else:
-    st.write("Por favor, escribe una dirección.")
-
-# Convertir la dirección a coordenadas
-##coordenadas = direccion_a_coordenadas(direccion)
+coordenadas = direccion_a_coordenadas(direccion)
 
 
 
-##latitud_ref = coordenadas[0]
-##longitud_ref = coordenadas[1]
+latitud_ref = coordenadas[0]
+longitud_ref = coordenadas[1]
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
@@ -198,19 +167,12 @@ tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', 
 
 df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
-# Crear un botón que llame a la función
-#if st.button('"Confirmar selección"'):
-#    mostrar_dataframe()
+
 # --------------------------------------
 
 # Encontrar las localizaciones más cercanas
-
-if latitud_ref is not None and longitud_ref is not None:
-    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
-else:
-    st.write("Por favor, escribe una dirección.")
 ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
-#localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
 # Mostrar las localizaciones cercanas, si existen
 if not localizaciones_cercanas.empty:
