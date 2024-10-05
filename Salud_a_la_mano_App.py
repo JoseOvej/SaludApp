@@ -27,7 +27,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.markdown(
     """
     <div style="text-align: center;">
-        <img src="dr_mapp_01.jpg" width="300">
+        <img src="dr_mapp_01.jpg" alt="centered image" width="300">
     </div>
     """, 
     unsafe_allow_html=True
