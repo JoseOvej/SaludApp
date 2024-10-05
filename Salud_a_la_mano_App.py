@@ -168,8 +168,7 @@ if st.button('Ejecutar proceso'):
     # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
     opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
     opciones = sorted(opciones)
-else: 
-    st.stop()
+
 
 
 # ---------------- DUDA ----------------
