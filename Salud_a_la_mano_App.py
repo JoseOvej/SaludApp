@@ -137,30 +137,31 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
+try:
+    latitud_ref = None
+    longitud_ref = None
+    coordenadas = None
 
-latitud_ref = None
-longitud_ref = None
-coordenadas = None
+    # Solicitar la dirección al usuario
+    direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
-# Solicitar la dirección al usuario
-direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
+    # Cantidad de establecimientos a mostrar
+    ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
-# Cantidad de establecimientos a mostrar
-##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
+    # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
+    dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
-# El usuario tiene que definir una distancia máxima para filtrar los establecimientos
-dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
-
-# Convertir la dirección en coordenadas
-if direccion is not None:
-    if coordenadas is not None and len(coordenadas) == 2:
-        latitud_ref = coordenadas[0]
-        longitud_ref = coordenadas[1]
+    # Convertir la dirección en coordenadas
+    if direccion is not None:
+        if coordenadas is not None and len(coordenadas) == 2:
+            latitud_ref = coordenadas[0]
+            longitud_ref = coordenadas[1]
+        else:
+            st.write("No se pudieron obtener las coordenadas de la dirección.")
     else:
-        st.write("No se pudieron obtener las coordenadas de la dirección.")
-else:
-    st.write("Por favor, escribe una dirección.")
-
+        st.write("Por favor, escribe una dirección.")
+except Exception as e:
+    st.write(f"Error al obtener las coordenadas: {e}")
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
@@ -177,18 +178,18 @@ df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)
 
 # --------------------------------------
 
-# Encontrar las localizaciones más cercanas
-##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
-localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+try: 
+    # Encontrar las localizaciones más cercanas
+    ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
+    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
-# Mostrar las localizaciones cercanas, si existen
-if not localizaciones_cercanas.empty:
-    st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
-else:
-    st.write("No hay localizaciones dentro del rango especificado.")
-
-
-
+    # Mostrar las localizaciones cercanas, si existen
+    if not localizaciones_cercanas.empty:
+        st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+    else:
+        st.write("No hay localizaciones dentro del rango especificado.")
+except Exception as e:
+    st.write(f"Error al obtener las coordenadas: {e}")
 
 # ------------ Creamos el mapa -----------
 
@@ -230,9 +231,11 @@ def generar_mapa_localizaciones_cercanas(latitud_referencia, longitud_referencia
     # Devolver el mapa
     return mapa_html
 
+try:
+    # Generar el mapa con las localizaciones más cercanas
+    mapa = generar_mapa_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global)
 
-# Generar el mapa con las localizaciones más cercanas
-mapa = generar_mapa_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global)
-
-# Mostrar el mapa
-html(mapa, height=700)
+    # Mostrar el mapa
+    html(mapa, height=700)
+except Exception as e:
+    st.write(f"Error al obtener las coordenadas: {e}")
