@@ -168,18 +168,25 @@ if st.button('Ejecutar proceso'):
     # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
     opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
     opciones = sorted(opciones)
+    tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones, default=["Todos"])  # Seleccionamos "Todos" por defecto)
+    df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
+    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
-
+    # Mostrar las localizaciones cercanas, si existen
+    if not localizaciones_cercanas.empty:
+        st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+    else:
+        st.write("No hay localizaciones dentro del rango especificado.")
+        st.stop()
 
 # ---------------- DUDA ----------------
 # Acá intento adaptar la selección de tipos de estableciemietos al tipo de widget de streamlit
 
-tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones, default=["Todos"])  # Seleccionamos "Todos" por defecto)
 
-if tipo_elegido == "Todos":
-    st.stop()
 
-df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
+
+
+
 
 
 # --------------------------------------
@@ -187,14 +194,9 @@ df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)
 
 # Encontrar las localizaciones más cercanas
 ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
-#localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
-# Mostrar las localizaciones cercanas, si existen
-if not localizaciones_cercanas.empty:
-    st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
-else:
-    st.write("No hay localizaciones dentro del rango especificado.")
-    st.stop()
+
+
 
 
 
