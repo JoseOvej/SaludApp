@@ -186,8 +186,8 @@ tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', 
 df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
 # Crear un botón que llame a la función
-if st.button('"Confirmar selección"'):
-    mostrar_dataframe()
+#if st.button('"Confirmar selección"'):
+#    mostrar_dataframe()
 # --------------------------------------
 
 # Encontrar las localizaciones más cercanas
