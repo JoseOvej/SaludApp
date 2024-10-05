@@ -150,9 +150,9 @@ if not direccion:
 ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
-dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
+dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=100)
 
-if not dist_maxima or dist_maxima = 0:
+if not dist_maxima or dist_maxima == 0:
     st.stop()  # Detener la ejecución aquí
 
 # Convertir la dirección en coordenadas
