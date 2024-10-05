@@ -141,6 +141,11 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # Solicitar la dirección al usuario
 direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
+# Si no se ingresa una dirección, detener la ejecución
+if not direccion:
+    st.write("Por favor, ingresa una dirección válida.")
+    st.stop()  # Detener la ejecución aquí
+
 # Cantidad de establecimientos a mostrar
 ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
