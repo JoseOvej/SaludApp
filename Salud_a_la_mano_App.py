@@ -170,7 +170,7 @@ opciones = sorted(opciones)
 # ---------------- DUDA ----------------
 # Acá intento adaptar la selección de tipos de estableciemietos al tipo de widget de streamlit
 
-tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones)
+tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones, default=["Todos"])  # Seleccionamos "Todos" por defecto)
 
 
 df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
