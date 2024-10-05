@@ -145,6 +145,14 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 #    else:
 #        print("No se ha seleccionado un servicio o el filtro no tiene resultados.")
 
+# Función que se ejecuta cuando el botón es presionado
+def mostrar_dataframe(b):
+    # Mostrar el DataFrame filtrado
+    if not df_filtrado_global.empty:
+        print(f"\nFiltrando por servicio: {desplegable.value}")
+        display(df_filtrado_global)
+    else:
+        print("No se ha seleccionado un servicio o el filtro no tiene resultados.")
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
@@ -157,7 +165,7 @@ direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: di
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
 dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
-# Convertir la dirección en coordenadas
+# Convertir la dirección a coordenadas
 coordenadas = direccion_a_coordenadas(direccion)
 
 
@@ -177,7 +185,9 @@ tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', 
 
 df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
-
+# Crear un botón que llame a la función
+if st.button('"Confirmar selección"'):
+    mostrar_dataframe()
 # --------------------------------------
 
 # Encontrar las localizaciones más cercanas
