@@ -49,13 +49,9 @@ def direccion_a_coordenadas(direccion):
 
 # Función para calcular la distancia entre dos puntos usando Haversine
 def calcular_distancia(lat1, lon1, lat2, lon2):
-    try:
-        point1 = (lat1, lon1)
-        point2 = (lat2, lon2)
-        return geodesic(point1, point2).kilometers
-    except Exception as e:
-        st.write(f"Error al obtener las coordenadas: {e}")
-        return None
+    point1 = (lat1, lon1)
+    point2 = (lat2, lon2)
+    return geodesic(point1, point2).kilometers
 
 # Función para encontrar las 10 localizaciones más cercanas
 #def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset, n, distanciamax):
