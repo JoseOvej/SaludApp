@@ -187,6 +187,7 @@ if not localizaciones_cercanas.empty:
     st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
 else:
     st.write("No hay localizaciones dentro del rango especificado.")
+    st.stop()
 
 
 
