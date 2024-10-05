@@ -163,9 +163,14 @@ coordenadas = direccion_a_coordenadas(direccion)
 latitud_ref = coordenadas[0]
 longitud_ref = coordenadas[1]
 
-# # Definir las opciones del desplegable, incluyendo la opción 'Todos'
-opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
-opciones = sorted(opciones)
+if st.button('Ejecutar proceso'):
+    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+    # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
+    opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+    opciones = sorted(opciones)
+else: 
+    st.stop()
+
 
 # ---------------- DUDA ----------------
 # Acá intento adaptar la selección de tipos de estableciemietos al tipo de widget de streamlit
@@ -179,8 +184,7 @@ df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)
 
 
 # --------------------------------------
-if st.button('Ejecutar proceso'):
-    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+
 
 # Encontrar las localizaciones más cercanas
 ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
