@@ -14,7 +14,7 @@ coordenadas = [-27.77392042365015, -64.31305325737927]
 page_bg_img = '''
 <style>
 .stApp {
-    background-color: #CEBB9B;
+    background-color: #FFFFFF;
 }
 </style>
 '''
