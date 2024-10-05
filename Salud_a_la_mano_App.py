@@ -8,7 +8,8 @@ from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 
 # Igresamos valores iniciales por defecto para que la página no de error
-coordenadas = [-27.77392042365015, -64.31305325737927]
+##coordenadas = [-27.77392042365015, -64.31305325737927]
+direccion = "av olmos 478, cordoba, argentina"
 
 # Fefinimos el fondo
 page_bg_img = '''
