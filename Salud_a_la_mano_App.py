@@ -8,8 +8,7 @@ from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 
 # Igresamos valores iniciales por defecto para que la página no de error
-##coordenadas = [-27.77392042365015, -64.31305325737927]
-direccion = "av olmos 478, cordoba, argentina"
+coordenadas = [-27.77392042365015, -64.31305325737927]
 
 # Fefinimos el fondo
 page_bg_img = '''
@@ -36,20 +35,16 @@ df_final.dropna(inplace=True)
 
 # Función para convertir una dirección en coordenadas
 def direccion_a_coordenadas(direccion):
-    try:
-        # Inicializar el geocodificador
-        geolocator = Nominatim(user_agent="mi_aplicacion_geopy")
+    # Inicializar el geocodificador
+    geolocator = Nominatim(user_agent="mi_aplicacion_geopy")
 
-        # Obtener la ubicación a partir de la dirección
-        ubicacion = geolocator.geocode(direccion)
+    # Obtener la ubicación a partir de la dirección
+    ubicacion = geolocator.geocode(direccion)
 
-        # Verificar si se encontró la dirección
-        if ubicacion:
-            return (ubicacion.latitude, ubicacion.longitude)
-        else:
-            return None
-    except Exception as e:
-        #st.write(f"Error al obtener las coordenadas: {e}")
+    # Verificar si se encontró la dirección
+    if ubicacion:
+        return (ubicacion.latitude, ubicacion.longitude)
+    else:
         return None
 
 # Función para calcular la distancia entre dos puntos usando Haversine
@@ -61,39 +56,36 @@ def calcular_distancia(lat1, lon1, lat2, lon2):
 # Función para encontrar las 10 localizaciones más cercanas
 #def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset, n, distanciamax):
 def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset, distanciamax):
-    try: 
-        # Crear una lista para almacenar las distancias calculadas
-        distancias = []
-        cantidad_establecimientos = 0
+    # Crear una lista para almacenar las distancias calculadas
+    distancias = []
+    cantidad_establecimientos = 0
 
-        # Calcular la distancia para cada localización
-        for index, row in dataset.iterrows():
-            lat = row['LATITUD']
-            lon = row['LONGITUD']
-            nombre = row['NOMBRE']
-            domicilio = row['DOMICILIO']
-            servicio = row['CATEGORIA_TIPOLOGIA']
+    # Calcular la distancia para cada localización
+    for index, row in dataset.iterrows():
+        lat = row['LATITUD']
+        lon = row['LONGITUD']
+        nombre = row['NOMBRE']
+        domicilio = row['DOMICILIO']
+        servicio = row['CATEGORIA_TIPOLOGIA']
 
-            # Calcular la distancia desde la referencia
-            distancia = calcular_distancia(latitud_referencia, longitud_referencia, lat, lon)
+        # Calcular la distancia desde la referencia
+        distancia = calcular_distancia(latitud_referencia, longitud_referencia, lat, lon)
 
-            # Considerar los registros correspondientes a la distancia límite que puede viajar el usuario
-            if distancia <= distanciamax:
+        # Considerar los registros correspondientes a la distancia límite que puede viajar el usuario
+        if distancia <= distanciamax:
 
-              # Añadir el nombre de la ubicación y la distancia a la lista
-              distancias.append({'nombre': nombre, 'latitud': lat, 'longitud': lon, 'distancia': distancia, 'domicilio': domicilio, 'servicio': servicio})
-              cantidad_establecimientos += 1
+          # Añadir el nombre de la ubicación y la distancia a la lista
+          distancias.append({'nombre': nombre, 'latitud': lat, 'longitud': lon, 'distancia': distancia, 'domicilio': domicilio, 'servicio': servicio})
+          cantidad_establecimientos += 1
 
-        # Convertir la lista de distancias a un DataFrame
-        distancias_df = pd.DataFrame(distancias)
+    # Convertir la lista de distancias a un DataFrame
+    distancias_df = pd.DataFrame(distancias)
 
-        # Ordenar el DataFrame por la distancia en orden ascendente
-        distancias_df = distancias_df.sort_values(by='distancia')
+    # Ordenar el DataFrame por la distancia en orden ascendente
+    distancias_df = distancias_df.sort_values(by='distancia')
 
-        # Devolver las 'n' localizaciones más cercanas
-        return distancias_df.head(cantidad_establecimientos)
-    except Exception as e:
-        st.write(f"Error al obtener las coordenadas: {e}")
+    # Devolver las 'n' localizaciones más cercanas
+    return distancias_df.head(cantidad_establecimientos)
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
@@ -140,10 +132,6 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
-latitud_ref = None
-longitud_ref = None
-coordenadas = None
-
 # Solicitar la dirección al usuario
 direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
@@ -154,14 +142,12 @@ direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: di
 dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
 # Convertir la dirección en coordenadas
-if direccion is not None:
-    if coordenadas is not None and len(coordenadas) == 2:
-        latitud_ref = coordenadas[0]
-        longitud_ref = coordenadas[1]
-    else:
-        st.write("No se pudieron obtener las coordenadas de la dirección.")
-else:
-    st.write("Por favor, escribe una dirección.")
+coordenadas = direccion_a_coordenadas(direccion)
+
+
+
+latitud_ref = coordenadas[0]
+longitud_ref = coordenadas[1]
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
@@ -187,6 +173,9 @@ if not localizaciones_cercanas.empty:
     st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
 else:
     st.write("No hay localizaciones dentro del rango especificado.")
+
+
+
 
 # ------------ Creamos el mapa -----------
 
@@ -228,11 +217,9 @@ def generar_mapa_localizaciones_cercanas(latitud_referencia, longitud_referencia
     # Devolver el mapa
     return mapa_html
 
-try:
-    # Generar el mapa con las localizaciones más cercanas
-    mapa = generar_mapa_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global)
 
-    # Mostrar el mapa
-    html(mapa, height=700)
-except Exception as e:
-    st.write(f"Error al obtener las coordenadas: {e}")
+# Generar el mapa con las localizaciones más cercanas
+mapa = generar_mapa_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global)
+
+# Mostrar el mapa
+html(mapa, height=700)
