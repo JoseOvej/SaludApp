@@ -92,8 +92,8 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 
         # Devolver las 'n' localizaciones más cercanas
         return distancias_df.head(cantidad_establecimientos)
-except Exception as e:
-    st.write(f"Error al obtener las coordenadas: {e}")
+    except Exception as e:
+        st.write(f"Error al obtener las coordenadas: {e}")
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
