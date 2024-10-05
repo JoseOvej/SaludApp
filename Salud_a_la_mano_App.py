@@ -61,36 +61,39 @@ def calcular_distancia(lat1, lon1, lat2, lon2):
 # Función para encontrar las 10 localizaciones más cercanas
 #def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset, n, distanciamax):
 def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset, distanciamax):
-    # Crear una lista para almacenar las distancias calculadas
-    distancias = []
-    cantidad_establecimientos = 0
+    try: 
+        # Crear una lista para almacenar las distancias calculadas
+        distancias = []
+        cantidad_establecimientos = 0
 
-    # Calcular la distancia para cada localización
-    for index, row in dataset.iterrows():
-        lat = row['LATITUD']
-        lon = row['LONGITUD']
-        nombre = row['NOMBRE']
-        domicilio = row['DOMICILIO']
-        servicio = row['CATEGORIA_TIPOLOGIA']
+        # Calcular la distancia para cada localización
+        for index, row in dataset.iterrows():
+            lat = row['LATITUD']
+            lon = row['LONGITUD']
+            nombre = row['NOMBRE']
+            domicilio = row['DOMICILIO']
+            servicio = row['CATEGORIA_TIPOLOGIA']
 
-        # Calcular la distancia desde la referencia
-        distancia = calcular_distancia(latitud_referencia, longitud_referencia, lat, lon)
+            # Calcular la distancia desde la referencia
+            distancia = calcular_distancia(latitud_referencia, longitud_referencia, lat, lon)
 
-        # Considerar los registros correspondientes a la distancia límite que puede viajar el usuario
-        if distancia <= distanciamax:
+            # Considerar los registros correspondientes a la distancia límite que puede viajar el usuario
+            if distancia <= distanciamax:
 
-          # Añadir el nombre de la ubicación y la distancia a la lista
-          distancias.append({'nombre': nombre, 'latitud': lat, 'longitud': lon, 'distancia': distancia, 'domicilio': domicilio, 'servicio': servicio})
-          cantidad_establecimientos += 1
+              # Añadir el nombre de la ubicación y la distancia a la lista
+              distancias.append({'nombre': nombre, 'latitud': lat, 'longitud': lon, 'distancia': distancia, 'domicilio': domicilio, 'servicio': servicio})
+              cantidad_establecimientos += 1
 
-    # Convertir la lista de distancias a un DataFrame
-    distancias_df = pd.DataFrame(distancias)
+        # Convertir la lista de distancias a un DataFrame
+        distancias_df = pd.DataFrame(distancias)
 
-    # Ordenar el DataFrame por la distancia en orden ascendente
-    distancias_df = distancias_df.sort_values(by='distancia')
+        # Ordenar el DataFrame por la distancia en orden ascendente
+        distancias_df = distancias_df.sort_values(by='distancia')
 
-    # Devolver las 'n' localizaciones más cercanas
-    return distancias_df.head(cantidad_establecimientos)
+        # Devolver las 'n' localizaciones más cercanas
+        return distancias_df.head(cantidad_establecimientos)
+except Exception as e:
+    st.write(f"Error al obtener las coordenadas: {e}")
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
@@ -175,18 +178,15 @@ df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)
 
 # --------------------------------------
 
-try: 
-    # Encontrar las localizaciones más cercanas
-    ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
-    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+# Encontrar las localizaciones más cercanas
+##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
+localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
-    # Mostrar las localizaciones cercanas, si existen
-    if not localizaciones_cercanas.empty:
-        st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
-    else:
-        st.write("No hay localizaciones dentro del rango especificado.")
-except Exception as e:
-    st.write(f"Error al obtener las coordenadas: {e}")
+# Mostrar las localizaciones cercanas, si existen
+if not localizaciones_cercanas.empty:
+    st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+else:
+    st.write("No hay localizaciones dentro del rango especificado.")
 
 # ------------ Creamos el mapa -----------
 
