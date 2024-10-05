@@ -177,10 +177,12 @@ df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)
 
 
 # --------------------------------------
+if st.button('Ejecutar proceso'):
+    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
 # Encontrar las localizaciones más cercanas
 ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
-localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
+#localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
 # Mostrar las localizaciones cercanas, si existen
 if not localizaciones_cercanas.empty:
