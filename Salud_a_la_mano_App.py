@@ -49,8 +49,8 @@ def direccion_a_coordenadas(direccion):
         else:
             return None
     except Exception as e:
-    st.write(f"Error al obtener las coordenadas: {e}")
-    return None
+        st.write(f"Error al obtener las coordenadas: {e}")
+        return None
 
 # Función para calcular la distancia entre dos puntos usando Haversine
 def calcular_distancia(lat1, lon1, lat2, lon2):
