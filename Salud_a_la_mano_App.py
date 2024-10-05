@@ -24,15 +24,15 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 # Insertamos el logo y el título
 
 # Centrar imagen usando HTML
-st.markdown(
-    """
-    <div style="text-align: center;">
-        <img src="dr_mapp_01.jpg" alt="centered image" width="300">
-    </div>
-    """, 
-    unsafe_allow_html=True
-)
-#st.image('./dr_mapp_01.jpg')
+#st.markdown(
+#    """
+#    <div style="text-align: center;">
+#        <img src="dr_mapp_01.jpg" alt="centered image" width="300">
+#    </div>
+##    """, 
+ #   unsafe_allow_html=True
+#)
+st.image('./dr_mapp_01.jpg')
 st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
 st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
