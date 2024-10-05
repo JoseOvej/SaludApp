@@ -22,6 +22,12 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
 # Insertamos el logo y el título
+# Crear columnas vacías para centrar la imagen
+col1, col2, col3 = st.columns([1, 2, 1])
+
+# Usar col2 para centrar la imagen
+with col2:
+    st.image("./dr_mapp_01.jpg", width=300)
 
 # Centrar imagen usando HTML
 #st.markdown(
@@ -32,7 +38,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 ##    """, 
  #   unsafe_allow_html=True
 #)
-st.image('./dr_mapp_01.jpg')
+#st.image('./dr_mapp_01.jpg')
 st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
 st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
