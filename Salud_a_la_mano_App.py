@@ -36,17 +36,21 @@ df_final.dropna(inplace=True)
 
 # Función para convertir una dirección en coordenadas
 def direccion_a_coordenadas(direccion):
-    # Inicializar el geocodificador
-    geolocator = Nominatim(user_agent="mi_aplicacion_geopy")
+    try:
+        # Inicializar el geocodificador
+        geolocator = Nominatim(user_agent="mi_aplicacion_geopy")
 
-    # Obtener la ubicación a partir de la dirección
-    ubicacion = geolocator.geocode(direccion)
+        # Obtener la ubicación a partir de la dirección
+        ubicacion = geolocator.geocode(direccion)
 
-    # Verificar si se encontró la dirección
-    if ubicacion:
-        return (ubicacion.latitude, ubicacion.longitude)
-    else:
-        return None
+        # Verificar si se encontró la dirección
+        if ubicacion:
+            return (ubicacion.latitude, ubicacion.longitude)
+        else:
+            return None
+    except Exception as e:
+    st.write(f"Error al obtener las coordenadas: {e}")
+    return None
 
 # Función para calcular la distancia entre dos puntos usando Haversine
 def calcular_distancia(lat1, lon1, lat2, lon2):
