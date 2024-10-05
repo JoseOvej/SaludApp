@@ -132,6 +132,10 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
+
+latitud_ref = None
+longitud_ref = None
+
 # Solicitar la dirección al usuario
 direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
