@@ -49,7 +49,7 @@ def direccion_a_coordenadas(direccion):
         else:
             return None
     except Exception as e:
-        st.write(f"Error al obtener las coordenadas: {e}")
+        #st.write(f"Error al obtener las coordenadas: {e}")
         return None
 
 # Función para calcular la distancia entre dos puntos usando Haversine
@@ -137,31 +137,28 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # ------------------------------------------------------------------------------
 
 # EJECUCIÓN
-try:
-    latitud_ref = None
-    longitud_ref = None
-    coordenadas = None
+latitud_ref = None
+longitud_ref = None
+coordenadas = None
 
-    # Solicitar la dirección al usuario
-    direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
+# Solicitar la dirección al usuario
+direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
-    # Cantidad de establecimientos a mostrar
-    ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
+# Cantidad de establecimientos a mostrar
+##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
-    # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
-    dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
+# El usuario tiene que definir una distancia máxima para filtrar los establecimientos
+dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
-    # Convertir la dirección en coordenadas
-    if direccion is not None:
-        if coordenadas is not None and len(coordenadas) == 2:
-            latitud_ref = coordenadas[0]
-            longitud_ref = coordenadas[1]
-        else:
-            st.write("No se pudieron obtener las coordenadas de la dirección.")
+# Convertir la dirección en coordenadas
+if direccion is not None:
+    if coordenadas is not None and len(coordenadas) == 2:
+        latitud_ref = coordenadas[0]
+        longitud_ref = coordenadas[1]
     else:
-        st.write("Por favor, escribe una dirección.")
-except Exception as e:
-    st.write(f"Error al obtener las coordenadas: {e}")
+        st.write("No se pudieron obtener las coordenadas de la dirección.")
+else:
+    st.write("Por favor, escribe una dirección.")
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
