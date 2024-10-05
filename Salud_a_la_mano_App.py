@@ -148,9 +148,11 @@ dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=
 
 # Convertir la dirección en coordenadas
 if direccion is not None:
-    coordenadas = direccion_a_coordenadas(direccion)
-    latitud_ref = coordenadas[0]
-    longitud_ref = coordenadas[1]
+    if coordenadas is not None and len(coordenadas) == 2:
+        latitud_ref = coordenadas[0]
+        longitud_ref = coordenadas[1]
+    else:
+        st.write("No se pudieron obtener las coordenadas de la dirección.")
 else:
     st.write("Por favor, escribe una dirección.")
 
