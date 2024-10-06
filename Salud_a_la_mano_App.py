@@ -27,7 +27,10 @@ col1, col2, col3 = st.columns([1, 2, 1])
 # Usar col2 para centrar la imagen
 with col2:
     st.image("./dr_mapp_01.jpg", width=300)
-st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
+
+# Centrar un título usando HTML y CSS
+st.markdown("<h1 style='text-align: center;'>¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!</h1>", unsafe_allow_html=True)
+#st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
 st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
 
