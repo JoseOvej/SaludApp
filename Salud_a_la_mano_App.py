@@ -123,7 +123,7 @@ try:
     #opciones = df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
     opciones = sorted(opciones)
 except TypeError as e:
-    st.error(f"Ocurrió un error: {e}")
+    #st.error(f"Ocurrió un error: {e}")
     st.stop()
 
 # ---------------- DUDA ----------------
