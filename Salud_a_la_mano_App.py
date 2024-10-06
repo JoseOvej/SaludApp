@@ -143,7 +143,7 @@ if 'Todos' in tipo_elegido:  # Cambiar la condición para verificar si 'Todos' e
     
     # Si se selecciona 'Todos', deseleccionar las demás opciones
     tipo_elegido = ['Todos']
-    st.warning("Al seleccionar 'Todos', no puedes seleccionar otras opciones.")
+    st.warning("Al seleccionar 'Todos', no aplicarán otras opciones en la búsqueda.")
     df_filtrado_global = df_final
 else:
 # Filtrar el DataFrame según el servicio seleccionado
@@ -161,7 +161,17 @@ localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitu
 # Mostrar las localizaciones cercanas, si existen
 if not localizaciones_cercanas.empty:
     #st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
-    st.dataframe(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']], hide_index=True)
+    # Renombrar columnas
+    localizaciones_cercanas.rename(columns={
+    'nombre': 'Nombre del Establecimiento',
+    'distancia': 'Distancia (km)',
+    'domicilio': 'Dirección',
+    'servicio': 'Tipo de Servicio'
+    }, inplace=True)
+    #st.dataframe(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']], hide_index=True)
+
+    # Mostrar el DataFrame sin el índice y con los nuevos nombres de columnas
+    st.dataframe(localizaciones_cercanas[['Nombre del Establecimiento', 'Distancia (km)', 'Dirección', 'Tipo de Servicio']], hide_index=True)
 else:
     st.write("No hay localizaciones dentro del rango especificado.")
 
