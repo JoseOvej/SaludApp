@@ -31,7 +31,10 @@ with col2:
 # Centrar un título usando HTML y CSS
 st.markdown("<h1 style='text-align: center;'>¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!</h1>", unsafe_allow_html=True)
 #st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
-st.header('Dinos dónde estás y qué distancia puedes recorrer.')
+# Línea divisora
+st.markdown("---")
+st.markdown("<h2 style='text-align: center;'>Dinos dónde estás y qué distancia puedes recorrer.</h2>", unsafe_allow_html=True)
+#st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
 
 # Cargo los datos del rígido
