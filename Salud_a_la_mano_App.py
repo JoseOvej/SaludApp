@@ -134,8 +134,14 @@ except TypeError as e:
 
 tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones)
 
+# Si se selecciona 'Todos', mostrar todo el DataFrame
+if tipo_elegido == 'Todos':
+    df_filtrado_global = df_final
+else:
+    # Filtrar el DataFrame según el servicio seleccionado
+    df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
-df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
+#df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
 
 # --------------------------------------
