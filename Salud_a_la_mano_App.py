@@ -85,7 +85,7 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
     # Convertir la lista de distancias a un DataFrame
     distancias_df = pd.DataFrame(distancias)
 
-    if not distancias_df:
+    if distancias_df.empty:
         st.stop()
 
     # Ordenar el DataFrame por la distancia en orden ascendente
