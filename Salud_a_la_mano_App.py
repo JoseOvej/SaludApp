@@ -109,15 +109,16 @@ if not dist_maxima or dist_maxima == 0:
     st.stop()  # Detener la ejecución aquí
 
 # Convertir la dirección en coordenadas
-coordenadas = direccion_a_coordenadas(direccion)
-
-
-
-latitud_ref = coordenadas[0]
-longitud_ref = coordenadas[1]
-
-# # Definir las opciones del desplegable, incluyendo la opción 'Todos'
 try:
+    coordenadas = direccion_a_coordenadas(direccion)
+
+
+
+    latitud_ref = coordenadas[0]
+    longitud_ref = coordenadas[1]
+
+    # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
+
     opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
     #opciones = df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
     opciones = sorted(opciones)
