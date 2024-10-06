@@ -143,7 +143,7 @@ tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', 
 
 df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
-print(df_flitrado_global)
+#print(df_flitrado_global)
 # --------------------------------------
 
 # Encontrar las localizaciones más cercanas
