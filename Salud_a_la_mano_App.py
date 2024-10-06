@@ -169,7 +169,7 @@ def generar_mapa_localizaciones_cercanas(latitud_referencia, longitud_referencia
     ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, dataset)
 
     # Crear el mapa centrado en la localización de referencia
-    mapa = folium.Map(location=[latitud_ref, longitud_ref], zoom_start=7)
+    mapa = folium.Map(location=[latitud_ref, longitud_ref], zoom_start=5)
 
     # Añadir un marcador para la localización de referencia
     folium.Marker(
