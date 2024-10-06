@@ -158,7 +158,8 @@ localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitu
 
 # Mostrar las localizaciones cercanas, si existen
 if not localizaciones_cercanas.empty:
-    st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+    #st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+    st.dataframe(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']], hide_index=True)
 else:
     st.write("No hay localizaciones dentro del rango especificado.")
 
