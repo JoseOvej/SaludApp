@@ -157,7 +157,8 @@ latitud_ref = coordenadas[0]
 longitud_ref = coordenadas[1]
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
-opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+#opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+opciones = df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
 opciones = sorted(opciones)
 
 # ---------------- DUDA ----------------
