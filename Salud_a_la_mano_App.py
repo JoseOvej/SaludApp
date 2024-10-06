@@ -134,6 +134,12 @@ except TypeError as e:
 
 tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones)
 
+# Lógica para restringir la selección
+if 'Todos' in tipo_elegido:
+    # Si se selecciona 'Todos', deseleccionar las demás opciones
+    tipo_elegido = ['Todos']
+    st.warning("Al seleccionar 'Todos', no puedes seleccionar otras opciones.")
+
 # Si se selecciona 'Todos', mostrar todo el DataFrame
 if 'Todos' in tipo_elegido:  # Cambiar la condición para verificar si 'Todos' está en la lista
     df_filtrado_global = df_final
