@@ -9,9 +9,6 @@ from geopy.geocoders import Nominatim
 
 global df_filtrado_global
 
-# Ingresamos valores iniciales por defecto para que la página no de error
-coordenadas = [-27.77392042365015, -64.31305325737927]
-
 # Definimos el fondo
 page_bg_img = '''
 <style>
@@ -94,59 +91,22 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
     # Devolver las 'n' localizaciones más cercanas
     return distancias_df.head(cantidad_establecimientos)
 
-# Función que se ejecuta cuando el usuario hace una selección
-# def filtrar_dataframe(change):
-#    global df_filtrado_global
-#    if change['type'] == 'change' and change['name'] == 'value':
-#        # Filtrar el DataFrame según la opción seleccionada
-#        servicio_seleccionado = change['new']
-
-#        # Si se selecciona 'Todos', mostrar todo el DataFrame
-#        if servicio_seleccionado == 'Todos':
-#            df_filtrado_global = df_final
-#        else:
-#            # Filtrar el DataFrame según el servicio seleccionado
-#            ##df_filtrado = df[df['País'] == pais_seleccionado]
-#            df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
-
-#        # Limpiar la salida anterior
-#        #clear_output(wait=True)
-
-#        # Mostrar el DataFrame filtrado
-#        ##print(f"\nFiltrando por servicio: {servicio_seleccionado}")
-#        ##display(df_filtrado_global.head())
-
-#        # Retornar el DataFrame filtrado
-#        ##return df_filtrado_global
-
-# ------------ NO ESTOY SEGURO SI ESTA PARTE VA -------------------------------
-
-# Función que se ejecuta cuando el botón es presionado
-#def mostrar_dataframe(b):
-#    #clear_output(wait=True)
-#
-#   # Mostrar el DataFrame original
-#   print("DataFrame original:")
-#    display(df_final)
-
-#    # Mostrar el DataFrame filtrado
-#    if not df_filtrado_global.empty:
-#        print(f"\nFiltrando por servicio: {desplegable.value}")
-#        display(df_filtrado_global)
-#    else:
-#        print("No se ha seleccionado un servicio o el filtro no tiene resultados.")
-
-# ------------------------------------------------------------------------------
 
 # EJECUCIÓN
 # Solicitar la dirección al usuario
 direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
+
+if not direccion:
+    st.stop()  # Detener la ejecución aquí
 
 # Cantidad de establecimientos a mostrar
 ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
 dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
+
+if not dist_maxima or dist_maxima == 0:
+    st.stop()  # Detener la ejecución aquí
 
 # Convertir la dirección en coordenadas
 coordenadas = direccion_a_coordenadas(direccion)
