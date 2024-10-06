@@ -201,9 +201,9 @@ def generar_mapa_localizaciones_cercanas(latitud_referencia, longitud_referencia
     for index, row in localizaciones_cercanas.iterrows():
         lat = row['latitud']
         lon = row['longitud']
-        nombre = row['nombre']
-        distancia = row['distancia']
-        tipo = row['servicio']
+        nombre = row['Nombre del Establecimiento']
+        distancia = row['Distancia (km)']
+        tipo = row['Tipo de Servicio']
 
         # Añadir un marcador para cada localización cercana
         folium.Marker(
