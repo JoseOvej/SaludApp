@@ -10,6 +10,8 @@ from geopy.geocoders import Nominatim
 # Igresamos valores iniciales por defecto para que la página no de error
 coordenadas = [-27.77392042365015, -64.31305325737927]
 
+global df_filtrado_global
+
 # Definimos el fondo
 page_bg_img = '''
 <style>
@@ -95,15 +97,15 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
-    global df_filtrado_global
-    if change['type'] == 'change' and change['name'] == 'value':
+    #global df_filtrado_global
+    #if change['type'] == 'change' and change['name'] == 'value':
         # Filtrar el DataFrame según la opción seleccionada
-        servicio_seleccionado = change['new']
+    #    servicio_seleccionado = change['new']
 
         # Si se selecciona 'Todos', mostrar todo el DataFrame
-        if servicio_seleccionado == 'Todos':
-            df_filtrado_global = df_final
-        else:
+    #    if servicio_seleccionado == 'Todos':
+    #        df_filtrado_global = df_final
+     #   else:
             # Filtrar el DataFrame según el servicio seleccionado
             ##df_filtrado = df[df['País'] == pais_seleccionado]
             df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
