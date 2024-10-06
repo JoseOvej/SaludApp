@@ -7,6 +7,8 @@ import folium
 from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 
+global df_filtrado_global
+
 # Ingresamos valores iniciales por defecto para que la página no de error
 coordenadas = [-27.77392042365015, -64.31305325737927]
 
@@ -94,28 +96,28 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
-    global df_filtrado_global
-    if change['type'] == 'change' and change['name'] == 'value':
-        # Filtrar el DataFrame según la opción seleccionada
-        servicio_seleccionado = change['new']
+#    global df_filtrado_global
+#    if change['type'] == 'change' and change['name'] == 'value':
+#        # Filtrar el DataFrame según la opción seleccionada
+#        servicio_seleccionado = change['new']
 
-        # Si se selecciona 'Todos', mostrar todo el DataFrame
-        if servicio_seleccionado == 'Todos':
-            df_filtrado_global = df_final
-        else:
-            # Filtrar el DataFrame según el servicio seleccionado
-            ##df_filtrado = df[df['País'] == pais_seleccionado]
-            df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
+#        # Si se selecciona 'Todos', mostrar todo el DataFrame
+#        if servicio_seleccionado == 'Todos':
+#            df_filtrado_global = df_final
+#        else:
+#            # Filtrar el DataFrame según el servicio seleccionado
+#            ##df_filtrado = df[df['País'] == pais_seleccionado]
+#            df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
 
-        # Limpiar la salida anterior
-        #clear_output(wait=True)
+#        # Limpiar la salida anterior
+#        #clear_output(wait=True)
 
-        # Mostrar el DataFrame filtrado
-        ##print(f"\nFiltrando por servicio: {servicio_seleccionado}")
-        ##display(df_filtrado_global.head())
+#        # Mostrar el DataFrame filtrado
+#        ##print(f"\nFiltrando por servicio: {servicio_seleccionado}")
+#        ##display(df_filtrado_global.head())
 
-        # Retornar el DataFrame filtrado
-        ##return df_filtrado_global
+#        # Retornar el DataFrame filtrado
+#        ##return df_filtrado_global
 
 # ------------ NO ESTOY SEGURO SI ESTA PARTE VA -------------------------------
 
