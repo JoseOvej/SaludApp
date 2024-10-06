@@ -133,7 +133,7 @@ try:
     opciones = sorted(opciones)
 except TypeError as e:
     #st.error(f"Ocurrió un error: {e}")
-    st.warning("Dirección no encontrada. Ingrese nuevamente el dato.)
+    st.warning("Dirección no encontrada. Ingrese nuevamente el dato.")
     st.stop()
 
 # ---------------- DUDA ----------------
