@@ -7,10 +7,8 @@ import folium
 from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 
-# Igresamos valores iniciales por defecto para que la página no de error
+# Ingresamos valores iniciales por defecto para que la página no de error
 coordenadas = [-27.77392042365015, -64.31305325737927]
-
-global df_filtrado_global
 
 # Definimos el fondo
 page_bg_img = '''
@@ -30,7 +28,6 @@ col1, col2, col3 = st.columns([1, 2, 1])
 # Usar col2 para centrar la imagen
 with col2:
     st.image("./dr_mapp_01.jpg", width=300)
-    
 st.title('¡Podemos ayudarte a encontrar el establecimiento de salud más cercano!')
 st.header('Dinos dónde estás y qué distancia puedes recorrer.')
 
@@ -97,18 +94,18 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 
 # Función que se ejecuta cuando el usuario hace una selección
 # def filtrar_dataframe(change):
-    #global df_filtrado_global
-    #if change['type'] == 'change' and change['name'] == 'value':
+    global df_filtrado_global
+    if change['type'] == 'change' and change['name'] == 'value':
         # Filtrar el DataFrame según la opción seleccionada
-    #    servicio_seleccionado = change['new']
+        servicio_seleccionado = change['new']
 
         # Si se selecciona 'Todos', mostrar todo el DataFrame
-    #    if servicio_seleccionado == 'Todos':
-    #        df_filtrado_global = df_final
-     #   else:
+        if servicio_seleccionado == 'Todos':
+            df_filtrado_global = df_final
+        else:
             # Filtrar el DataFrame según el servicio seleccionado
             ##df_filtrado = df[df['País'] == pais_seleccionado]
-           # df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
+            df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
 
         # Limpiar la salida anterior
         #clear_output(wait=True)
@@ -143,19 +140,11 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
 # Solicitar la dirección al usuario
 direccion = st.text_input('Ingrese la dirección (sin acentos, el formato es: dirección, ciudad, país): ')
 
-# Si no se ingresa una dirección, detener la ejecución
-if not direccion:
-    st.write("Por favor, ingresa una dirección válida.")
-    st.stop()  # Detener la ejecución aquí
-
 # Cantidad de establecimientos a mostrar
 ##cantidad = int(input("Ingrese la cantidad de establecimientos a mostrar: "))
 
 # El usuario tiene que definir una distancia máxima para filtrar los establecimientos
-dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=100)
-
-if not dist_maxima or dist_maxima == 0:
-    st.stop()  # Detener la ejecución aquí
+dist_maxima = st.slider('Seleccionar distancia máxima', min_value=0, max_value=50)
 
 # Convertir la dirección en coordenadas
 coordenadas = direccion_a_coordenadas(direccion)
@@ -165,40 +154,30 @@ coordenadas = direccion_a_coordenadas(direccion)
 latitud_ref = coordenadas[0]
 longitud_ref = coordenadas[1]
 
-if st.button('Ejecutar proceso'):
-    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
-    # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
-    opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
-    opciones = sorted(opciones)
-    tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones, default=["Todos"])  # Seleccionamos "Todos" por defecto)
-    df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
-    localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
-
-    # Mostrar las localizaciones cercanas, si existen
-    if not localizaciones_cercanas.empty:
-        st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
-    else:
-        st.write("No hay localizaciones dentro del rango especificado.")
-        st.stop()
+# # Definir las opciones del desplegable, incluyendo la opción 'Todos'
+opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+opciones = sorted(opciones)
 
 # ---------------- DUDA ----------------
 # Acá intento adaptar la selección de tipos de estableciemietos al tipo de widget de streamlit
 
+tipo_elegido = st.multiselect('Elige el tipo de establecimiento que necesitas', opciones)
 
 
-
-
-
+df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'].isin(tipo_elegido)]
 
 
 # --------------------------------------
 
-
 # Encontrar las localizaciones más cercanas
 ##localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_final, cantidad, dist_maxima)
+localizaciones_cercanas = encontrar_localizaciones_cercanas(latitud_ref, longitud_ref, df_filtrado_global, dist_maxima)
 
-
-
+# Mostrar las localizaciones cercanas, si existen
+if not localizaciones_cercanas.empty:
+    st.write(localizaciones_cercanas[['nombre', 'distancia', 'domicilio', 'servicio']])
+else:
+    st.write("No hay localizaciones dentro del rango especificado.")
 
 
 
