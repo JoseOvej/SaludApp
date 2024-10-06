@@ -117,9 +117,13 @@ latitud_ref = coordenadas[0]
 longitud_ref = coordenadas[1]
 
 # # Definir las opciones del desplegable, incluyendo la opción 'Todos'
-#opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
-opciones = df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
-opciones = sorted(opciones)
+try:
+    opciones = ['Todos'] + df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+    #opciones = df_final['CATEGORIA_TIPOLOGIA'].unique().tolist()
+    opciones = sorted(opciones)
+except TypeError as e:
+    st.error(f"Ocurrió un error: {e}")
+    st.stop()
 
 # ---------------- DUDA ----------------
 # Acá intento adaptar la selección de tipos de estableciemietos al tipo de widget de streamlit
