@@ -108,7 +108,7 @@ def encontrar_localizaciones_cercanas(latitud_referencia, longitud_referencia, d
      #   else:
             # Filtrar el DataFrame según el servicio seleccionado
             ##df_filtrado = df[df['País'] == pais_seleccionado]
-            df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
+           # df_filtrado_global = df_final[df_final['CATEGORIA_TIPOLOGIA'] == servicio_seleccionado]
 
         # Limpiar la salida anterior
         #clear_output(wait=True)
